@@ -18,6 +18,13 @@
           <a v-bind:href="'https://www.themoviedb.org/movie/' +result.id">{{ result.title }}</a>
         </h2>
         <div class="ratings">
+          <star-rating  :increment = "0.1"
+              :rating = "result.vote_average"
+              :max-rating = "10"
+              :show-rating = "false"
+              :read-only = "true"
+              :item-size = "30"
+              :inline = "false"></star-rating>
           <span class="rating-category critics-choice" v-if="result.vote_average > 8">Critic's Choice</span>
           <span class="rating-category well-liked" v-if="(result.vote_average > 7) && (result.vote_average <= 8)">Well Liked</span>
           <span class="rating-category stinker" v-if="(result.vote_average <= 7)">Stinker</span>
@@ -27,7 +34,7 @@
         <p class="overview">
           {{ result.overview }}
         </p>
-        <p class="release-date">Original Release: {{ result.release_date }}</p>
+        <p class="release-date">Original Release: {{ result.release_date | formatdate }}</p>
         <ul class="genre-list">
           <li v-for="genre in result.genres">{{ genre }}</li>
         </ul>
@@ -38,7 +45,22 @@
 
 <script>
 import apiresults from "../assets/apiresults.js";
+import {StarRating} from 'vue-rate-it';
+
 export default {
+  components: {
+    StarRating
+  },
+  filters: {
+    formatdate: function(rawDate) {
+      let newDate = new Date(rawDate);
+      // The +1 is here because somehow the code drops a day.
+      newDate.setDate(newDate.getDate() + 1);
+      console.log(newDate);
+
+      return newDate.toDateString();
+    }
+  },
   data() {
     return apiresults;
   }

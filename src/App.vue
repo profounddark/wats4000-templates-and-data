@@ -8,6 +8,7 @@
 import Results from '@/components/Results'
 export default {
   name: 'app',
+
   components: {
     Results
   }
