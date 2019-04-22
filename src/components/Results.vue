@@ -17,14 +17,16 @@
         <h2 class="title">
           <a v-bind:href="'https://www.themoviedb.org/movie/' +result.id">{{ result.title }}</a>
         </h2>
+        <star-rating  :increment = "0.1"
+          :rating = "result.vote_average"
+          :max-rating = "10"
+          :show-rating = "false"
+          :read-only = "true"
+          :item-size = "30"
+          :inline = "false">
+        </star-rating>
         <div class="ratings">
-          <star-rating  :increment = "0.1"
-              :rating = "result.vote_average"
-              :max-rating = "10"
-              :show-rating = "false"
-              :read-only = "true"
-              :item-size = "30"
-              :inline = "false"></star-rating>
+
           <span class="rating-category critics-choice" v-if="result.vote_average > 8">Critic's Choice</span>
           <span class="rating-category well-liked" v-if="(result.vote_average > 7) && (result.vote_average <= 8)">Well Liked</span>
           <span class="rating-category stinker" v-if="(result.vote_average <= 7)">Stinker</span>
@@ -71,7 +73,7 @@ export default {
 <style scoped>
 h1,
 h2 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.25rem 0;
 }
 ul {
   list-style-type: none;
@@ -93,6 +95,9 @@ ul {
   font-weight: 600;
   font-size: 12px;
   color: #333;
+}
+.ratings {
+  margin-top: 0.5rem;
 }
 .rating-category {
   font-size: 12px;
